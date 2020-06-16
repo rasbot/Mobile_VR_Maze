@@ -1,10 +1,49 @@
-# VR Project 3 Readme #
-## Nathan Rasmussen ##
-Maze is...a maze! In this VR app you start in the opening scene and must click on the "Enter the Maze" sign to get to the maze. Once the maze starts you need to locate and collect the key before you can open the door to the temple to complete the maze. The door will be locked until the key is used. There are a total of 5 collectible coins in the game which you can find. 
+# Mobile VR Maze
 
-This project was a lot of work but I learned a ton by doing it. I felt like after a solid day I was almost done with it, but not only did I spend a lot of time trying to make it look visually appealing with the lighting and a skybox, I spent even more time troubleshooting what seemed to be little things. I ended up spending maybe 30 hours on it and the scripting portion was a lot of fun because I started to really understand (at a basic level) what I was doing and how to make things work properly. I had a lot of weird issues with the GvrViewer and it was because I was trying to adapt the trigger script from project 2 for every interacting object I was using. I went back to the scripts provided in the download and used the event system and the trigger methods to make it work and it was a lot easier in the end.
+This maze was created in the Unity game engine using the GoogleVR SDK. As part of the Udacity VR Nanodeveloper degree, this project explores creating an interactive game which is deployed to a mobile APK to use on an Android phone with a Google cardboard viewer. The player must navigate through the maze and find a key. The door in the end of the maze will open only if the player possesses the key.  
 
-The biggest thing I wanted was to make the waypoints animate as you transition. I felt that the sudden transporting and the constant moving around the maze was not very user friendly. I wanted there to be a slower transition and I tried very hard to adapt the waypoints used in the lessons to the project but in the end they just never worked. I couldn't figure out how to animate the ones provided and in the end I felt I had spent sufficient time on the project.
+<p align="center">
+  <img src="Images/VR_Maze_Overview.PNG" width="800" height="500"/>
+</p>
 
-Another thing or things I wanted to do was to make a GUI timer that counted down and have the coins add time which would encourage players to find them. All the references to adding a GUI display seemed to say to put it on the player object and when I tried to do this on the camera it never showed up. I did get a countdown timer to work and was going to make it "kill" the player when it was zero but I needed it to be displayed and didn't get it to work. I also wanted the coin count to be displayed but didn't get it to work for the same reason.
+This project has features which include:
 
+### Creating An Environment With Atmosphere
+
+Expanding on previous projects, this project features a maze, which took a few iterations to construct one that is both simple to navigate but has areas where the player must backtrack to find their way. This project includes a skybox to add atmosphere, as well as ambient sounds. The player is greeted with instructions when starting:
+
+<p align="center">
+  <img src="Images/intro_animation.gif" width="500" height="450"/>
+</p>
+
+The player must navigate through the maze and can encounter spooky areas of the maze. Is this a previous player? Is there peril and danger around every corner?
+
+<p align="center">
+  <img src="Images/Skeleton.PNG" width="700" height="550"/>
+</p>
+
+### Collectables
+
+The game has 3 coins which can be collected. This was intended to add a layer to the game aside from escaping the maze. The idea here was to incentivize the player to explore the rest of the maze if they so happened to find their way to the key and exit. This part of the game was never fully implemented in that there is no point system or benefit to finding coins. The original idea was to have the maze be timed, and coins give the player more time. 
+
+<p align="center">
+  <img src="Images/coin_animation2.gif" width="500" height="450"/>
+</p>
+
+### Interactions and Animations
+
+For this part of the project, the user must find a key before they are able to leave the maze. 
+
+<p align="center">
+  <img src="Images/key_animation.gif" width="500" height="450"/>
+</p>
+
+The player can get to the end of the maze where they find a door. The door is animated and will only open if the player has the key. Once the player finds the key, the key gameObject will be destroyed. During this process, a "key poof" particle effect will be activated, along with a sound to let the player know they key has been obtained. For the door to activate, there are different ways to go about this. Originally I was going to create a bool which would be set to `True` if the key was obtained, but instead the script to activate the door animation just checks to see if the key gameObject is `NULL`, and if so it will trigger the animation which allows the player to "win" the game.
+
+<p align="center">
+  <img src="Images/door_animation.gif" width="500" height="450"/>
+</p>
+
+### Next Steps
+
+To continue this project, implementing a timer so the player must complete the maze in a predetermined time and have the coin collectables add time to the clock. The locomotion is not smooth and when user testing the feedback was that there needs to be a transition between waypoints instead of instantaneously jumping to the one selected. This could be accomplished by lerping the main camera from its current position to the position of the waypoint.
