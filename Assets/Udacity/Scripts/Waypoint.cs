@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Waypoint : MonoBehaviour
 {
+	public float speed = 10.0f;
 	private enum State
 	{
 		Idle,
@@ -29,13 +30,13 @@ public class Waypoint : MonoBehaviour
 	[Header("Material")]
 	public Material	material					= null;
 	public Color color_hilight					= new Color(0.8f, 0.8f, 1.0f, 0.125f);	
-	
+
 	[Header("State Blend Speeds")]
 	public float lerp_idle 						= 0.0f;
 	public float lerp_focus 					= 0.0f;
 	public float lerp_hide						= 0.0f;
 	public float lerp_clicked					= 0.0f;
-	
+
 	[Header("State Animation Scales")]
 	public float scale_clicked_max				= 0.0f;
 	public float scale_animation				= 3.0f;	
@@ -66,43 +67,43 @@ public class Waypoint : MonoBehaviour
 	void Update()
 	{
 		bool occupied 	= Camera.main.transform.position == gameObject.transform.position;
-		
+
 		switch(_state)
 		{
-			case State.Idle:
-				Idle();
-				
-				_state 		= occupied ? State.Occupied : _state;
-				break;
+		case State.Idle:
+			Idle();
 
-			case State.Focused:
-				Focus();
-				break;
+			_state 		= occupied ? State.Occupied : _state;
+			break;
 
-			case State.Clicked:
-				Clicked();
+		case State.Focused:
+			Focus();
+			break;
 
-				bool scaled = _scale >= scale_clicked_max * .95f;
-				_state 		= scaled ? State.Approaching : _state;
-				break;
+		case State.Clicked:
+			Clicked ();
 
-			case State.Approaching:
-				Hide();	
+			bool scaled = _scale >= scale_clicked_max * .95f;
+			_state 		= scaled ? State.Approaching : _state;
+			break;
 
-				_state 		= occupied ? State.Occupied : _state;
-				break;
-			case State.Occupied:
-				Hide();
+		case State.Approaching:
+			Hide();	
 
-				_state = !occupied ? State.Idle : _state;
-				break;
-			
-			case State.Hidden:
-				Hide();
-				break;
+			_state 		= occupied ? State.Occupied : _state;
+			break;
+		case State.Occupied:
+			Hide();
 
-			default:
-				break;
+			_state = !occupied ? State.Idle : _state;
+			break;
+
+		case State.Hidden:
+			Hide();
+			break;
+
+		default:
+			break;
 		}
 
 		gameObject.GetComponentInChildren<MeshRenderer>().material.color 	= _color;
@@ -110,7 +111,7 @@ public class Waypoint : MonoBehaviour
 
 		_animated_lerp														= Mathf.Abs(Mathf.Cos(Time.time * scale_animation));
 	}
-
+		
 
 	public void Enter()
 	{
@@ -127,9 +128,10 @@ public class Waypoint : MonoBehaviour
 	public void Click()
 	{
 		_state = _state == State.Focused ? State.Clicked : _state;
-		
-		_audio_source.Play();
 
+		_audio_source.Play();
+		// Smoothly move the viewer towards to the active waypoint
+		// Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, gameObject.transform.position, Time.deltaTime * speed);
 		Camera.main.transform.position 	= gameObject.transform.position;
 	}
 
