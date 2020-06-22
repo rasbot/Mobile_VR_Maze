@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="Images/cover.png" width="800" height="500"/>
+  <img src="Images/cover.png" width="800" height="auto"/>
 </p>
 
 This maze was created in the Unity game engine using the GoogleVR SDK. As part of the Udacity VR Nanodeveloper degree, this project explores creating an interactive game which is deployed to a mobile APK to use on an Android phone with a Google cardboard viewer. The player must navigate through the maze and find a key. The door in the end of the maze will open only if the player possesses the key.  
